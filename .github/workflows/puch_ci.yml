@@ -17,10 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ windows-latest ]
-        architecture: [ x64, ARM64 ]
     runs-on: ${{ matrix.os }}
-    env:
-      PROCESSOR_ARCHITECTURE: ${{ matrix.architecture }}
 
     steps:
     - uses: actions/checkout@v4
@@ -35,11 +32,8 @@ jobs:
     - name: Build exe
       run: |
         ./build.bat
-    - name: Create zip
-      run: |
-        Compress-Archive -Path ./dist/* -DestinationPath ./dist/MSPCManagerHelper_Beta_${{ matrix.os }}_${{ matrix.architecture }}.zip
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: MSPCManagerHelper_Beta_${{ matrix.os }}_${{ matrix.architecture }}
-        path: ./dist/MSPCManagerHelper_Beta_${{ matrix.os }}_${{ matrix.architecture }}.zip
+        name: MSPCManagerHelper_Beta_${{ matrix.os }}
+        path: ./dist/
